@@ -97,3 +97,31 @@ set `date` = str_to_date(`date`,'%m/%d/%Y');
 alter table layoffs_staging2
 modify column `date` date;
 
+select *
+from layoffs_staging2;
+
+select *
+from layoffs_staging2
+where industry is null 
+or industry = "";
+
+select *
+from layoffs_staging2 t1
+join  layoffs_staging2 t2
+	on t1.company = t2.company
+where (t1.industry is null or t1.industry = "")
+and t2.industry is not null;
+
+ update layoffs_staging2
+ set industry = null
+ where industry = "";
+
+update layoffs_staging2 t1
+join layoffs_staging2 t2
+	on t1.company = t2.company
+set t1.industry = t2.industry
+where t1.industry is null
+and t2.industry is not null;
+
+
+
