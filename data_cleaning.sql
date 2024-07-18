@@ -88,8 +88,10 @@ update layoffs_staging2
 set country = trim(trailing "." from country)
 where country like 'United States%';
 
+select `date`
+from layoffs_staging2;
 
-
-
+update layoffs_staging2
+set `date` = str_to_date(`date`,'%m/%d/%Y');
 
  
