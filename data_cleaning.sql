@@ -58,5 +58,13 @@ SELECT *
 FROM layoffs_staging2
 WHERE row_num > 1;
 
+SELECT company
+FROM layoffs_staging2;
+
+UPDATE layoffs_staging2
+set company = trim(company);
 
 
+
+
+ 
