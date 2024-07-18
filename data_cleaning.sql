@@ -76,5 +76,20 @@ UPDATE layoffs_staging2
 SET industry = 'Crypto'
 WHERE industry LIKE "crypto%";
 
+SELECT  country
+FROM layoffs_staging2
+order by 1;
+
+select distinct country , trim(trailing "." from country)
+from layoffs_staging2
+order by 1;
+
+update layoffs_staging2
+set country = trim(trailing "." from country)
+where country like 'United States%';
+
+
+
+
 
  
