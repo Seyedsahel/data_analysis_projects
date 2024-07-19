@@ -123,5 +123,13 @@ set t1.industry = t2.industry
 where t1.industry is null
 and t2.industry is not null;
 
+-- for total_laid_off , percentage_laid_off cant fill null values but they have a lot of null values 
+-- and actiolly they are not matter in next project(date explority) so we gonna delete them
+
+delete 
+from layoffs_staging2 
+where total_laid_off is null
+and percentage_laid_off is null;
+
 
 
