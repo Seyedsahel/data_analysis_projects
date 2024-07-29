@@ -65,3 +65,22 @@ order by 1 desc
 select `month` , total_off , 
 sum(total_off) over(order by `month`) as roling_total
 from Rolling_Total;
+
+with company_year (company , years , total_laid_off) as(
+select company, year(`date`),sum(total_laid_off)
+from layoffs_staging2
+group by company, year(`date`)
+) ,
+ company_ranking_year as(
+select *,
+dense_rank() over(partition by years order by total_laid_off desc) as ranking
+from company_year
+where years is not null)
+select * 
+from company_ranking_year 
+where ranking <= 5;
+
+
+
+
+
