@@ -47,3 +47,21 @@ from layoffs_staging2
 group by company
 order by 2 desc;
 -- it doesnt relly help full because we dont know how big the companies are
+
+select substring(`date`,1,7) as `month` , sum(total_laid_off) as total_off
+from layoffs_staging2
+where substring(`date`,1,7) is not null
+group by `month`
+order by 1 desc;
+
+with Rolling_Total as
+(
+select substring(`date`,1,7) as `month` , sum(total_laid_off) as total_off
+from layoffs_staging2
+where substring(`date`,1,7) is not null
+group by `month`
+order by 1 desc
+)
+select `month` , total_off , 
+sum(total_off) over(order by `month`) as roling_total
+from Rolling_Total;
