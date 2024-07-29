@@ -82,5 +82,18 @@ where ranking <= 5;
 
 
 
+with industry_year (industry , years , total_laid_off) as(
+select industry, year(`date`),sum(total_laid_off)
+from layoffs_staging2
+group by industry, year(`date`)
+) ,
+ industry_ranking_year as(
+select *,
+dense_rank() over(partition by years order by total_laid_off desc) as ranking
+from industry_year
+where years is not null)
+select * 
+from industry_ranking_year 
+where ranking <= 5;
 
 
